@@ -1,0 +1,1 @@
+FROM geonode/geoserver:2.18.2
