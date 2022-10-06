@@ -134,7 +134,7 @@ services:
     build:
       context: ./nginx
     ports:
-      - "8080:80"
+      - "80:80"
       - "8360:8360"
     volumes:
       - ${NGINX_CONF}:/etc/nginx/nginx.conf:ro

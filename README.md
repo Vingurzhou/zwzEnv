@@ -1,5 +1,5 @@
-# ZWO-Ops
-一个基于 `docker` 的 `ZWO-Ops` 本地开发运行环境。
+# zwzEnv
+一个基于 `docker` 的本地开发运行环境。
 
 
 ## 使用
@@ -91,10 +91,3 @@ docker-compose up -d
 ```bash
 docker-compose up -d golang mysql redis
 ```
-
-### 3.运行代码
-将项目代码放置 `CODE_PATH_HOST` 指定的本机目录，进入 `golang` 容器，运行项目代码。
-~~~bash
-docker exec -it ZWO-Ops_golang_1 bash
-~~~
-127.0.0.1
