@@ -1,0 +1,5 @@
+.DS_Store
+data/mysql/*
+data/logs/nginx/*
+data/nginx_data/conf/*.swp
+data/redis/*
