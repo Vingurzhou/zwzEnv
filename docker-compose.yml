@@ -6,7 +6,7 @@ networks:
 
 services:
 
-  nodejs:                                # 自定义容器名称
+  nodejs:                                # 自定义容器名称 要删除node_modules和package-lock.json
     build:
       context: ./nodejs                 # 指定构建使用的 Dockerfile 文件
     privileged: true
@@ -17,7 +17,7 @@ services:
       - "9700:9700"
       - "9701:9701"
       - "9702:9702"
-      - "9703:9703"
+      - "9527:9527"
     stdin_open: true                     # 打开标准输入，可以接受外部输入
     tty: true
     networks:
