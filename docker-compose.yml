@@ -6,17 +6,17 @@ networks:
 
 services:
 
-  nodejs:                                # 自定义容器名称 要删除node_modules和package-lock.json
+  node14.9.0:                                # 自定义容器名称 要删除node_modules和package-lock.json
     build:
-      context: ./nodejs                 # 指定构建使用的 Dockerfile 文件
+      context: ./node:14.9.0                 # 指定构建使用的 Dockerfile 文件
     privileged: true
     volumes:                             # 设置挂载目录
       - ${CODE_PATH_HOST}:/usr/src/code  # 引用 .env 配置中 CODE_PATH_HOST 变量，将宿主机上代码存放的目录挂载到容器中 /usr/src/code 目录
       - ${GOLANG_LOGS}:/var/log/nodejs
     ports:                               # 设置端口映射
-      - "9700:9700"
-      - "9701:9701"
-      - "9702:9702"
+      # - "9700:9700"
+      # - "9701:9701"
+      # - "9702:9702"
       - "9527:9527"
     stdin_open: true                     # 打开标准输入，可以接受外部输入
     tty: true
@@ -24,9 +24,9 @@ services:
       - backend
     restart: always                      # 指定容器退出后的重启策略为始终重启
 
-  golang:                                # 自定义容器名称
+  golang1.17:                                # 自定义容器名称
     build:
-      context: ./golang                 # 指定构建使用的 Dockerfile 文件
+      context: ./golang:1.17                 # 指定构建使用的 Dockerfile 文件
     environment:                         # 设置环境变量
       - TZ=${TZ}
     privileged: true
@@ -35,13 +35,13 @@ services:
       - ${GOLANG_LOGS}:/var/log/golang
     ports:                               # 设置端口映射
       - "8100:8100"
-      - "8101:8101"
-      - "8102:8102"
-      - "8103:8103"
-      - "9600:9600"
-      - "9601:9601"
-      - "9602:9602"
-      - "9603:9603"
+      # - "8101:8101"
+      # - "8102:8102"
+      # - "8103:8103"
+      # - "9600:9600"
+      # - "9601:9601"
+      # - "9602:9602"
+      # - "9603:9603"
     stdin_open: true                     # 打开标准输入，可以接受外部输入
     tty: true
     networks:
@@ -63,9 +63,9 @@ services:
       - backend
     restart: always
 
-  mysql:
+  mysql8.0:
     build:
-      context: ./mysql
+      context: ./mysql:8.0
     environment:
       - TZ=${TZ}
       - MYSQL_USER=${MYSQL_USERNAME}                  # 设置 Mysql 用户名称
@@ -111,16 +111,15 @@ services:
       - backend
     restart: always
 
-  php-fpm:
+  php7.4-fpm:
     build:
-      context: ./php-fpm
+      context: ./php:7.4-fpm
     ports:
       - "${PHPFPM_PORT}:9000"
-      - "9500:9500"
-      - "9501:9501"
-      - "9502:9502"
-      - "9503:9503"
-      - "8000:8000"
+      # - "9500:9500"
+      # - "9501:9501"
+      # - "9502:9502"
+      # - "9503:9503"
     volumes:
       - ${CODE_PATH_HOST}:/var/www/html
       - ${PHP_FPM_LOGS}:/usr/local/var/log
@@ -131,12 +130,12 @@ services:
       - backend
     restart: always                      # 指定容器退出后的重启策略为始终重启
 
-  nginx:
+  nginx1.21.6:
     build:
-      context: ./nginx
+      context: ./nginx:1.21.6
     ports:
       - "80:80"
-      - "8360:8360"
+      # - "8360:8360"
     volumes:
       - ${NGINX_CONF}:/etc/nginx/nginx.conf:ro
       - ${NGINX_CONF_PATH}:/etc/nginx/conf.d
@@ -146,3 +145,16 @@ services:
     networks:
       - backend
     restart: always                      # 指定容器退出后的重启策略为始终重启
+
+  ubuntu22.10:
+    build:
+      context: ./ubuntu:22.10
+    # ports:
+    #   - "80:80"
+    volumes:
+      - ${CODE_PATH_HOST}:/root/VscodeProject
+    command: ["sleep","infinity"]
+    privileged: true
+    networks:
+      - backend
+    restart: always 
