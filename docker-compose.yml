@@ -146,13 +146,14 @@ services:
       - backend
     restart: always                      # 指定容器退出后的重启策略为始终重启
 
-  ubuntu22.10:
+  ubuntu20.04:
     build:
-      context: ./ubuntu:22.10
-    # ports:
-    #   - "80:80"
+      context: ./ubuntu:20.04
+    ports:
+      - "8000:8000"
     volumes:
       - ${CODE_PATH_HOST}:/root/VscodeProject
+      - ${NOVA_LOGS_PATH}:/data/nova/nova.log
     command: ["sleep","infinity"]
     privileged: true
     networks:
