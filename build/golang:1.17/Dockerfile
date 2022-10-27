@@ -23,7 +23,7 @@ RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.lis
 
 # 安装 goctl
 USER root
-RUN GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest
+RUN GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@v1.3.9
 
 # 安装 protoc
 USER root
@@ -57,4 +57,4 @@ RUN apt-get clean && \
     rm /var/log/lastlog /var/log/faillog
 
 # 设置工作目录
-WORKDIR /usr/src/code
+# WORKDIR /usr/src/code
