@@ -1,5 +1,9 @@
-.DS_Store
-data/mysql/*
-data/logs/nginx/*
-data/nginx_data/conf/*.swp
-data/redis/*
+*.dblwr
+/data/mysql/*
+/data/prometheus/*
+/data/elasticsearch/*
+/data/elasticsearch/*
+/data/redis/*
+/data/logs/*
+/.idea/*
+/data/grafana/*

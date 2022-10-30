@@ -1,0 +1,89 @@
+Clusters:
+  - Input:
+      Kafka:
+        Name: zwo_nginx
+        Brokers:
+          - "zwoastro-kafka:9092"
+        Topics:
+          - zwo-nginx-log
+        Group: pro
+        Consumers: 16
+    Filters:
+      - Action: drop
+        Conditions:
+          - Key: k8s_container_name
+            Value: "-rpc"
+            Type: contains
+          - Key: level
+            Value: info
+            Type: match
+            Op: and
+      - Action: remove_field
+        Fields:
+          # - message
+          - _source
+          - _type
+          - _score
+          - _id
+          - "@version"
+          - topic
+          - index
+          - beat
+          - docker_container
+          - offset
+          - prospector
+          - source
+          - stream
+          - "@metadata"
+      - Action: transfer
+        Field: message
+        Target: data
+    Output:
+      ElasticSearch:
+        Hosts:
+          - "http://zwoastro-elasticsearch:9200"
+        Index: "zwo-nginx-log-{{yyyy-MM-dd}}"
+  - Input:
+      Kafka:
+        Name: zwo_golang
+        Brokers:
+          - "zwoastro-kafka:9092"
+        Topics:
+          - zwo-golang-log
+        Group: pro
+        Consumers: 16
+    Filters:
+      - Action: drop
+        Conditions:
+          - Key: k8s_container_name
+            Value: "-rpc"
+            Type: contains
+          - Key: level
+            Value: info
+            Type: match
+            Op: and
+      - Action: remove_field
+        Fields:
+          # - message
+          - _source
+          - _type
+          - _score
+          - _id
+          - "@version"
+          - topic
+          - index
+          - beat
+          - docker_container
+          - offset
+          - prospector
+          - source
+          - stream
+          - "@metadata"
+      - Action: transfer
+        Field: message
+        Target: data
+    Output:
+      ElasticSearch:
+        Hosts:
+          - "http://zwoastro-elasticsearch:9200"
+        Index: "zwo-golang-log-{{yyyy-MM-dd}}"

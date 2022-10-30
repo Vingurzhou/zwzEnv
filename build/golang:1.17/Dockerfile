@@ -1,6 +1,5 @@
 FROM golang:1.17
 
-LABEL maintainer="xiaobin.shi <addison.shi@zwoptical.com>"
 
 ENV GOPROXY https://goproxy.cn,direct
 
@@ -45,8 +44,8 @@ RUN GO111MODULE=on go get github.com/cortesi/modd/cmd/modd
 
 #env 放在最后
 ENV GO111MODULE=on
-ENV GOROOT=/usr/local/go
-ENV GOPATH=/go
+#ENV GOROOT=/usr/local/go
+#ENV GOPATH=/go
 # $GOPATH/bin添加到环境变量中
 ENV PATH $GOPATH/bin:$PATH
 

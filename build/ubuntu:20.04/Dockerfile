@@ -42,7 +42,7 @@ RUN for x in \
     astropy \
     ; do pip3 install --no-cache-dir $x; done
 
-WORKDIR /root/VscodeProject
+WORKDIR /root/src
 
 # Astrometry.net
 RUN git clone http://github.com/dstndstn/astrometry.net.git astrometry \
@@ -92,3 +92,16 @@ RUN mv migrations/* /tmp && \
 # CMD python manage.py runserver
 
 # EXPOSE 8000
+
+
+RUN apt update && apt install  openssh-server sudo -y
+
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 test
+
+RUN  echo 'test:test' | chpasswd
+
+RUN service ssh start
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd","-D"]

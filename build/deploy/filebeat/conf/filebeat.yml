@@ -1,0 +1,33 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/message/nginx/*.log
+    fields:                             # 设置一个 fields，用于标记这个日志 
+      topic: zwo-nginx-log       # 为 fields 设置一个关键字 topic，值为 kafka 中已经设置好的 topic 名称
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/message/golang/*.log
+    fields:                             # 设置一个 fields，用于标记这个日志 
+      topic: zwo-golang-log       # 为 fields 设置一个关键字 topic，值为 kafka 中已经设置好的 topic 名称
+
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+processors:
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+
+output.kafka:
+  enabled: true
+  hosts: ["kafka:9092"]
+  #要提前创建topic
+  topic: "%{[fields.topic]}"
+  partition.hash:
+    reachable_only: true
+  compression: gzip
+  max_message_bytes: 1000000
+  required_acks: 1
